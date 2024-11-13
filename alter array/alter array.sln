@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "alter array", "alter array\alter array.csproj", "{AD675742-E598-4056-BF15-D8E71895557E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryForArrays", "..\..\Library for Arrays Repository\LibraryForArrays\LibraryForArrays\LibraryForArrays.csproj", "{B2686CAD-A850-4130-867C-07054659DA63}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD675742-E598-4056-BF15-D8E71895557E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD675742-E598-4056-BF15-D8E71895557E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD675742-E598-4056-BF15-D8E71895557E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD675742-E598-4056-BF15-D8E71895557E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2686CAD-A850-4130-867C-07054659DA63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2686CAD-A850-4130-867C-07054659DA63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2686CAD-A850-4130-867C-07054659DA63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2686CAD-A850-4130-867C-07054659DA63}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {01CF0A0A-2A1E-49C8-8878-9DE8B63DD901}
+	EndGlobalSection
+EndGlobal
