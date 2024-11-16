@@ -1,0 +1,134 @@
+﻿@page "/"
+
+@inject IHttpClientFactory _clientFactory;
+
+<h3>Weather</h3>
+
+@if (!string.IsNullOrEmpty(errorString))
+{
+    <div class="h2">@errorString</div>
+}
+else if (errorString is null)
+{
+    <div class"h4">Loading...</div>
+}
+else
+{
+    <table class="table table-bordered">
+        <tr class="bg-light">
+            <td>Latitude</td>
+            <td>@kyivForecast.Latitude</td>
+        </tr>
+        <tr>
+            <td>Longitude</td>
+            <td>@kyivForecast.Longitude</td>
+        </tr>
+        <tr class="bg-light">
+            <td>Time</td>
+            <td>@kyivForecast.Current.Time</td>
+        </tr>
+        <tr>
+            <td>Temperature</td>
+            <td>@kyivForecast.Current.Temperature_2m</td>
+        </tr>
+        <tr class="bg-light">
+            <td>Time of day</td>
+            <td>@GetDayOrNight(kyivForecast.Current.Is_day)</td>
+        </tr>
+        <tr>
+            <td>Weather description</td>
+            <td>@GetCountryCodeValue(kyivForecast.Current.Weather_code)</td>
+        </tr>
+    </table>
+}
+
+@code {
+    string errorString;
+
+    KyivForecast kyivForecast;
+    protected override async Task OnInitializedAsync()
+    {
+        string url = "https://api.open-meteo.com/v1/forecast?latitude=50.4547&longitude=30.5238&current=temperature_2m,is_day,weather_code&forecast_days=1";
+
+        var client = _clientFactory.CreateClient();
+        try
+        {
+            kyivForecast = await client.GetFromJsonAsync<KyivForecast>(url);
+            errorString = "";
+        }
+        catch (Exception exception)
+        {
+            errorString = $"While we was trying to get information, we've got an error: ";
+        }
+        // var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+        // var client = _clientFactory.CreateClient();
+
+        // HttpResponseMessage responseMessage = await client.SendAsync(request);
+
+        // if (responseMessage.IsSuccessStatusCode)
+        // {
+        //     kyivForecast = await responseMessage.Content.ReadFromJsonAsync<KyivForecast>();
+        //     errorString = "";
+        // }
+        // else
+        //     errorString = $"While we tried to get information, we've got an error: {responseMessage.ReasonPhrase}";
+    }
+
+    string GetDayOrNight(int code)
+    {
+        if (code == 0)
+            return "Night";
+        else
+            return "Day";
+    }
+    string GetCountryCodeValue(int countryCode)
+    {
+        switch (countryCode)
+        {
+            case 0:
+                return "Clear sky";
+            case 1:
+            case 2:
+            case 3:
+                return "Mainly clear, partly cloudy, and overcast";
+            case 45:
+            case 48:
+                return "Fog and depositing rime fog";
+            case 51:
+            case 53:
+            case 55:
+                return "Drizzle: Light, moderate, and dense intensity";
+            case 56:
+            case 57:
+                return "Freezing Drizzle: Light and dense intensity";
+            case 61:
+            case 62:
+            case 65:
+                return "Rain: Slight, moderate and heavy intensity";
+            case 66:
+            case 67:
+                return "Freezing Rain: Light and heavy intensity";
+            case 71:
+            case 73:
+            case 75:
+                return "Snow fall: Slight, moderate, and heavy intensity";
+            case 77:
+                return "Snow grains";
+            case 80:
+            case 81:
+            case 82:
+                return "Rain showers: Slight, moderate, and violent";
+            case 85:
+            case 86:
+                return "Snow showers slight and heavy";
+            case 95:
+                return "Thunderstorm: Slight or moderate";
+            case 96:
+            case 99:
+                return "Thunderstorm with slight and heavy hail";
+            default:
+                return "";
+        }
+    }
+}
