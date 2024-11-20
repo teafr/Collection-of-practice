@@ -6,16 +6,21 @@ namespace Events_with_notifications
     {
         static void Main(string[] args)
         {
-            User user = new User(1, "Teafr", "teafr");
-            user.MakeNewPost();
-            PublishInstagramPost publishNewPostInInstagra = new PublishInstagramPost();
-            EmailNotification emailMessage = new();
-            AppNotification appMessage = new();
+            int userId = 1;
 
-            publishNewPostInInstagra.SendMessages += emailMessage.OnSendNotifications;
-            publishNewPostInInstagra.SendMessages += appMessage.OnSendNotifications;
+            User user = new User(userId++, "Teafr");
+            User firstSubscriber = new User(userId++, "Jack");
+            User secondSubscriber = new User(userId++, "Coul");
 
-            publishNewPostInInstagra.Publish(post);
+            firstSubscriber.Follow(user, true, false);
+            secondSubscriber.Follow(user, true, true);
+
+            user.PublishPost("Me with my friends");
+            Console.WriteLine();
+
+            firstSubscriber.UnFollow(user);
+
+            user.PublishPost("Hey guys!! I missed you");
         }
     }
 }

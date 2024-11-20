@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Events_with_notifications
 {
-    public class AppNotification
+    public class Email
     {
-        public User AccoutOwner { get; private set; }
+        public User EmailOwner { get; private set; }
         public bool notificationsEnabled = false;
-        public AppNotification(User accoutOwner)
+        public Email(User emailOwner)
         {
-            AccoutOwner = accoutOwner;
+            EmailOwner = emailOwner;
         }
         public void OnSendNotifications(object obj, PostEventArgs e)
         {
-            Console.WriteLine($"Notification was sent on {AccoutOwner.Name}'s app messages.");
+            Console.WriteLine($"Notification was sent on {EmailOwner.Name}'s mail.");
         }
     }
 }
