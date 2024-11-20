@@ -4,23 +4,41 @@ namespace Events_with_notifications
 {
     internal class Instagram
     {
+        public static int userId = 1;
+        public static int postId = 1;
         static void Main(string[] args)
         {
-            int userId = 1;
+            User firstUser = new User("Teafr");
+            User secondUser = new User( "Jack");
+            User thirdUser = new User("Coul");
+            User fourthUser = new User("Saul");
 
-            User user = new User(userId++, "Teafr");
-            User firstSubscriber = new User(userId++, "Jack");
-            User secondSubscriber = new User(userId++, "Coul");
+            secondUser.Follow(firstUser, true);
+            thirdUser.Follow(firstUser, true, true);
 
-            firstSubscriber.Follow(user, true, false);
-            secondSubscriber.Follow(user, true, true);
-
-            user.PublishPost("Me with my friends");
+            firstUser.PublishPost("Me with my friends");
             Console.WriteLine();
 
-            firstSubscriber.UnFollow(user);
+            fourthUser.Follow(secondUser);
+            secondUser.UnFollow(firstUser);
 
-            user.PublishPost("Hey guys!! I missed you");
+            firstUser.PublishPost("Hey guys!! I missed you");
+            Console.WriteLine();
+            secondUser.PublishPost("Hell");
+            Console.WriteLine();
+            firstUser.PublishPost("Yummy!!");
+            Console.WriteLine();
+
+            thirdUser.Follow(secondUser, false, true);
+
+            secondUser.PublishPost("In the forest");
+            Console.WriteLine();
+
+            firstUser.DeletePost(1);
+            secondUser.UpdatePost("It was so hard");
+
+            firstUser.GetListOfPosts();
+            secondUser.GetListOfPosts();
         }
     }
 }
