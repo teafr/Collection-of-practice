@@ -1,11 +1,10 @@
-﻿using System.Threading;
+﻿using Events_with_notifications.Models;
+using System.Threading;
 
 namespace Events_with_notifications
 {
     internal class Instagram
     {
-        public static int userId = 1;
-        public static int postId = 1;
         static void Main(string[] args)
         {
             User firstUser = new User("Teafr");

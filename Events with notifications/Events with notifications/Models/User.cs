@@ -1,28 +1,31 @@
-﻿using System;
+﻿using Events_with_notifications.EventSystem;
+using Events_with_notifications.NotificationServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Events_with_notifications.Instagram;
 
-namespace Events_with_notifications
+namespace Events_with_notifications.Models
 {
     public class User
     {
+        private static int _currentId = 1;
         public int Id { get; }
         public string Name { get; private set; }
-        public Email EmailOfUser { get; private set; }
+        public UserEmail Email { get; private set; }
         public AppNotification AppNotification { get; private set; }
         public List<Post> Posts { get; } = new List<Post>();
         public List<User> Subscribers { get; private set; } = new List<User>();
         public List<User> Subscriptions { get; private set; } = new List<User>();
         public PublishInstagramPost PublishInstagramPost { get; } = new PublishInstagramPost();
-        
+
         public User(string name)
         {
-            Id = userId++;
+            Id = _currentId++;
             Name = name;
-            EmailOfUser = new Email(this);
+            Email = new UserEmail(this);
             AppNotification = new AppNotification(this);
         }
 
@@ -39,10 +42,11 @@ namespace Events_with_notifications
 
             Console.Write("Id of post: ");
             int id;
-            while (!Int32.TryParse(Console.ReadLine(), out id)) ;
+            while (!int.TryParse(Console.ReadLine(), out id)) ;
+
             try
             {
-                Posts.FirstOrDefault(post => post.Id == id).ChangeDescription(description);
+                Posts.FirstOrDefault(post => post.Id == id)!.ChangeDescription(description);
             }
             catch (Exception ex)
             {
@@ -58,7 +62,7 @@ namespace Events_with_notifications
         }
         public void DeletePost(int id)
         {
-            Posts.Remove(Posts.FirstOrDefault(post => post.Id == id));
+            Posts.Remove(Posts.FirstOrDefault(post => post.Id == id)!);
         }
         public void Follow(User whoYouWantToFollow, bool enableAppSms = false, bool enableEmailSms = false)
         {
@@ -66,13 +70,13 @@ namespace Events_with_notifications
             whoYouWantToFollow.Subscribers.Add(this);
             if (enableAppSms)
             {
-                whoYouWantToFollow.PublishInstagramPost.SendMessages += AppNotification.OnSendNotifications;
-                AppNotification.notificationsEnabled = true;
+                whoYouWantToFollow.PublishInstagramPost.SendMessages += AppNotification.OnSendNotifications!;
+                AppNotification.NotificationsEnabled = true;
             }
             if (enableEmailSms)
             {
-                whoYouWantToFollow.PublishInstagramPost.SendMessages += EmailOfUser.OnSendNotifications;
-                EmailOfUser.notificationsEnabled = true;
+                whoYouWantToFollow.PublishInstagramPost.SendMessages += Email.OnSendNotifications!;
+                Email.notificationsEnabled = true;
             }
         }
         public void UnFollow(User whoYouWantToUnFollow)
@@ -80,15 +84,15 @@ namespace Events_with_notifications
             Subscriptions.Remove(whoYouWantToUnFollow);
             whoYouWantToUnFollow.Subscribers.Remove(this);
 
-            if (AppNotification.notificationsEnabled)
+            if (AppNotification.NotificationsEnabled)
             {
-                whoYouWantToUnFollow.PublishInstagramPost.SendMessages -= AppNotification.OnSendNotifications;
-                AppNotification.notificationsEnabled = false;
+                whoYouWantToUnFollow.PublishInstagramPost.SendMessages -= AppNotification.OnSendNotifications!;
+                AppNotification.NotificationsEnabled = false;
             }
-            if (EmailOfUser.notificationsEnabled)
+            if (Email.NotificationsEnabled)
             {
-                whoYouWantToUnFollow.PublishInstagramPost.SendMessages -= EmailOfUser.OnSendNotifications;
-                EmailOfUser.notificationsEnabled = false;
+                whoYouWantToUnFollow.PublishInstagramPost.SendMessages -= Email.OnSendNotifications!;
+                Email.notificationsEnabled = false;
             }
 
         }

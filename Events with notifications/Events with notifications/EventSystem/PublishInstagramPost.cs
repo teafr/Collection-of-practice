@@ -1,14 +1,15 @@
-﻿using System;
+﻿using Events_with_notifications.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Events_with_notifications
+namespace Events_with_notifications.EventSystem
 {
     public class PublishInstagramPost
     {
-        public event EventHandler<PostEventArgs> SendMessages;
+        public event EventHandler<PostEventArgs>? SendMessages;
 
         public void Publish(Post post)
         {
