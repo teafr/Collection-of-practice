@@ -1,42 +1,97 @@
-﻿namespace FileToolLibrary
+﻿using System.IO;
+
+namespace FileToolLibrary
 {
     public static class FileTool
     {
-        public static List<string> GetFilesInfo(string directory)
+        public static List<string> GetFilesInfo(string? directory)
         {
-            string[] files = Directory.GetFiles(directory);
-            List<string> info = new List<string>();
+            PathAndDirectoryValidator(directory!, nameof(directory));
 
-            foreach (var file in files)
+            try
             {
-                FileInfo fileInfo = new FileInfo(file);
+                string[] files = Directory.GetFiles(directory!);
 
-                info.Add($"Path of file: {file}. Name of file: {Path.GetFileNameWithoutExtension(file)}." +
-                         $"Extemtion: {Path.GetExtension(file)}. Name with extention: {Path.GetFileName(file)}" +
-                         $"Creation time: {fileInfo.CreationTime}. Length: {fileInfo.Length}.\n");
+                List<string> info = [];
+
+                foreach (var file in files)
+                {
+                    info.Add($"Path: {file}. Name: {Path.GetFileName(file)}.\n");
+                }
+
+                return info;
             }
+            catch (Exception)
+            {
+                throw new ArgumentException("Incorrect directory.");
+            }
+        } 
 
-            return info;
-        }
-
-        public static void MoveFiles(string directory, string destinationDir)
+        public static void AppendText(string path, string text)
         {
-            string[] files = Directory.GetFiles(directory);
+            PathAndDirectoryValidator(path!, nameof(path));
 
-            foreach (var file in files)
-                File.Move(file, $"{destinationDir}{Path.GetFileName(file)}");
+            try
+            {
+                using FileStream fileStream = new FileStream(path, FileMode.Append);
+                using StreamWriter streamWriter = new StreamWriter(fileStream);
+
+                streamWriter.Write(text);
+            }
+            catch (Exception)
+            {
+                throw new ArgumentException("Incorrect directory.");
+            }
         }
-        public static void FileAppend(string path, string text)
-        {
-            using (FileStream fileStream = new FileStream(path, FileMode.Append))
-                using (StreamWriter streamWriter = new StreamWriter(fileStream))
-                    streamWriter.WriteLine(text);
-        }
+
         public static string ReadFile(string path)
         {
-            using (StreamReader streamReader = new StreamReader(path))
+            PathAndDirectoryValidator(path!, nameof(path));
+
+            try
             {
+                using StreamReader streamReader = new StreamReader(path);
                 return streamReader.ReadToEnd();
+            }
+            catch (Exception)
+            {
+                throw new ArgumentException("Incorrect directory.");
+            }
+        }
+
+        public static void MoveFiles(string directory, string destinationDirectory)
+        {
+            PathAndDirectoryValidator(directory!, nameof(directory));
+            PathAndDirectoryValidator(destinationDirectory!, nameof(destinationDirectory));
+
+            try
+            {
+                string[] files = Directory.GetFiles(directory);
+
+                foreach (var file in files)
+                {
+                    File.Move(file, $"{destinationDirectory}{Path.GetFileName(file)}");
+                }
+            }
+            catch (Exception)
+            {
+                throw new ArgumentException("Incorrect directory. Try to add '\\' at the end.");
+            }
+        }
+
+        private static void PathAndDirectoryValidator(string directory, string argumentName)
+        {
+            if (directory is null)
+            {
+                throw new ArgumentException($"{argumentName} is null.");
+            }
+            if (directory.Length == 0)
+            {
+                throw new ArgumentException($"{argumentName} is empty.");
+            }
+            if (string.IsNullOrWhiteSpace(directory))
+            {
+                throw new ArgumentException($"{argumentName} contains white spaces");
             }
         }
     }
