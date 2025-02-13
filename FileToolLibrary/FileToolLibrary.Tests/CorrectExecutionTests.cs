@@ -6,7 +6,7 @@ using System.Reflection;
 namespace FileToolLibrary.Tests
 {
     [TestClass]
-    public sealed class FileToolTest
+    public sealed class CorrectExecutionTests
     {
         [TestMethod]
         public void GetFilesInfo_ShouldGiveInfoAboutAllFilesByDir()
@@ -30,25 +30,6 @@ namespace FileToolLibrary.Tests
         }
 
         [TestMethod]
-        public void PathValidator_ShouldExist()
-        {
-            MethodInfo methodInfo = typeof(FileTool).GetMethod("PathValidator", BindingFlags.NonPublic | 
-                                                                                BindingFlags.Static | 
-                                                                                BindingFlags.Instance)!;
-            Assert.AreNotEqual(null, methodInfo);
-        }
-
-        [TestMethod]
-        [DataRow("")]
-        [DataRow("      ")]
-        [DataRow(null)]
-        [DataRow(@"\djfj")]
-        public void GetFilesInfo_ThrowsArgumentException(string argument)
-        {
-            Assert.ThrowsException<ArgumentException>(() => FileTool.GetFilesInfo(argument));
-        }
-
-        [TestMethod]
         public void AppendTextInFile_ShouldCorrectlyAppendText()
         {
             // Arange
@@ -64,16 +45,6 @@ namespace FileToolLibrary.Tests
         }
 
         [TestMethod]
-        [DataRow("")]
-        [DataRow("      ")]
-        [DataRow(null)]
-        [DataRow(@"\djfj")]
-        public void AppendTextInFile_ThrowsArgumentException(string argument)
-        {
-            Assert.ThrowsException<ArgumentException>(() => FileTool.AppendText(argument, "Some text"));
-        }
-
-        [TestMethod]
         public void ReadFile_ShouldCorrectlyReadTextInFile()
         {
             // Arange
@@ -86,16 +57,6 @@ namespace FileToolLibrary.Tests
 
             // Assert
             Assert.AreEqual(expacted, actual);
-        }
-
-        [TestMethod]
-        [DataRow("")]
-        [DataRow("      ")]
-        [DataRow(null)]
-        [DataRow(@"\djfj")]
-        public void ReadFile_ThrowsArgumentException(string argument)
-        {
-            Assert.ThrowsException<ArgumentException>(() => FileTool.ReadFile(argument));
         }
 
         [TestMethod]
@@ -117,20 +78,6 @@ namespace FileToolLibrary.Tests
             // Assert
             Assert.IsTrue(File.Exists(destination + @$"\{fileName}"));
             File.Delete(destination + @$"\{fileName}");
-        }
-
-        [TestMethod]
-        [DataRow("", @"C:\")]
-        [DataRow("      ", @"C:\")]
-        [DataRow(null, @"C:\")]
-        [DataRow(@"\djfj", @"C:\")]
-        [DataRow(@"C:\", "")]
-        [DataRow(@"C:\", "    ")]
-        [DataRow(@"C:\", null)]
-        [DataRow(@"C:\", @"\djfj")]
-        public void MoveFiles_ThrowsArgumentException(string direction, string destination)
-        {
-            Assert.ThrowsException<ArgumentException>(() => FileTool.MoveFiles(direction, destination));
         }
     }
 }

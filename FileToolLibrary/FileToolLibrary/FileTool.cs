@@ -81,7 +81,7 @@ namespace FileToolLibrary
             }
         }
 
-        public static void PathValidator(string directory, string argumentName)
+        private static void PathValidator(string directory, string argumentName)
         {
             if (directory is null)
             {
