@@ -1,10 +1,6 @@
-# Collection of practice
+# Work with files and Unit Tests
 
-### Navigation
-- [Practice with modifiers (ref, out) and enum](https://github.com/teafr/Collection-of-practice/tree/practice_with_ref_out_and_enum)
-- [Practice with API](https://github.com/teafr/Collection-of-practice/tree/ApiPractice)
-- [Practice with events](https://github.com/teafr/Collection-of-practice/tree/EventsPractice)
-- [Practice with JSON serialisation and deserialization](https://github.com/teafr/Collection-of-practice/tree/JsonSerializationAndDeserialization)
+### Tech info
+There is a [Class Library project](https://github.com/teafr/Collection-of-practice/tree/FilesAndUnitTests/FileToolLibrary/FileToolLibrary) for files/directories manipulation. In [MSTest Test project](https://github.com/teafr/Collection-of-practice/tree/FilesAndUnitTests/FileToolLibrary/FileToolLibrary.Tests) I splited tests to make such categories: [Performs correctly](https://github.com/teafr/Collection-of-practice/blob/FilesAndUnitTests/FileToolLibrary/FileToolLibrary.Tests/CorrectExecutionTests.cs), [Throws Exception](https://github.com/teafr/Collection-of-practice/blob/FilesAndUnitTests/FileToolLibrary/FileToolLibrary.Tests/ThrowsExceptionTests.cs), [Exists](https://github.com/teafr/Collection-of-practice/blob/FilesAndUnitTests/FileToolLibrary/FileToolLibrary.Tests/ExistenceTests.cs)
 
-This repository has some of my trainings. It'll update regularly, because I study all the time and I try to gather all my practices in one place. 
-When I want to recall something, It's very convenient to look up old little projects.
+I used Reflection to check if there is a method in class which check argument for validatiton.
