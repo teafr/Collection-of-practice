@@ -4,6 +4,9 @@ namespace FileToolLibrary
 {
     public static class FileTool
     {
+        private const string INCORRECT_DIR_MESSAGE = "Incorrect directory.";
+        private const string INCORRECT_DIR_MESSAGE_WITH_ADVICE = "Incorrect directory. Try to add '\\' at the end.";
+
         public static List<string> GetFilesInfo(string? directory)
         {
             PathAndDirectoryValidator(directory!, nameof(directory));
@@ -11,7 +14,6 @@ namespace FileToolLibrary
             try
             {
                 string[] files = Directory.GetFiles(directory!);
-
                 List<string> info = [];
 
                 foreach (var file in files)
@@ -40,7 +42,7 @@ namespace FileToolLibrary
             }
             catch (Exception)
             {
-                throw new ArgumentException("Incorrect directory.");
+                throw new ArgumentException(INCORRECT_DIR_MESSAGE);
             }
         }
 
@@ -55,7 +57,7 @@ namespace FileToolLibrary
             }
             catch (Exception)
             {
-                throw new ArgumentException("Incorrect directory.");
+                throw new ArgumentException(INCORRECT_DIR_MESSAGE);
             }
         }
 
@@ -75,7 +77,7 @@ namespace FileToolLibrary
             }
             catch (Exception)
             {
-                throw new ArgumentException("Incorrect directory. Try to add '\\' at the end.");
+                throw new ArgumentException(INCORRECT_DIR_MESSAGE_WITH_ADVICE);
             }
         }
 
