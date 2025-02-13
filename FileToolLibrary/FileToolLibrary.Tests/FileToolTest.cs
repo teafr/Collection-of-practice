@@ -1,5 +1,7 @@
-﻿using FileToolLibrary;
+﻿using Autofac.Extras.Moq;
+using FileToolLibrary;
 using System.IO;
+using System.Reflection;
 
 namespace FileToolLibrary.Tests
 {
@@ -25,6 +27,15 @@ namespace FileToolLibrary.Tests
             // Assert
             Assert.AreEqual(1, actual.Count);
             Assert.AreEqual(expacted, actual[0]);
+        }
+
+        [TestMethod]
+        public void PathValidator_ShouldExist()
+        {
+            MethodInfo methodInfo = typeof(FileTool).GetMethod("PathValidator", BindingFlags.NonPublic | 
+                                                                                BindingFlags.Static | 
+                                                                                BindingFlags.Instance)!;
+            Assert.AreNotEqual(null, methodInfo);
         }
 
         [TestMethod]

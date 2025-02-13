@@ -2,14 +2,14 @@
 
 namespace FileToolLibrary
 {
-    public static class FileTool
+    public class FileTool
     {
         private const string INCORRECT_DIR_MESSAGE = "Incorrect directory.";
         private const string INCORRECT_DIR_MESSAGE_WITH_ADVICE = "Incorrect directory. Try to add '\\' at the end.";
 
         public static List<string> GetFilesInfo(string? directory)
         {
-            PathAndDirectoryValidator(directory!, nameof(directory));
+            PathValidator(directory!, nameof(directory));
 
             try
             {
@@ -31,7 +31,7 @@ namespace FileToolLibrary
 
         public static void AppendText(string path, string text)
         {
-            PathAndDirectoryValidator(path!, nameof(path));
+            PathValidator(path!, nameof(path));
 
             try
             {
@@ -48,7 +48,7 @@ namespace FileToolLibrary
 
         public static string ReadFile(string path)
         {
-            PathAndDirectoryValidator(path!, nameof(path));
+            PathValidator(path!, nameof(path));
 
             try
             {
@@ -63,8 +63,8 @@ namespace FileToolLibrary
 
         public static void MoveFiles(string directory, string destinationDirectory)
         {
-            PathAndDirectoryValidator(directory!, nameof(directory));
-            PathAndDirectoryValidator(destinationDirectory!, nameof(destinationDirectory));
+            PathValidator(directory!, nameof(directory));
+            PathValidator(destinationDirectory!, nameof(destinationDirectory));
 
             try
             {
@@ -81,7 +81,7 @@ namespace FileToolLibrary
             }
         }
 
-        private static void PathAndDirectoryValidator(string directory, string argumentName)
+        public static void PathValidator(string directory, string argumentName)
         {
             if (directory is null)
             {
